@@ -1,14 +1,20 @@
 import prisma from "../../prisma/prisma.js";
 
 class CardModel {
-  // Obter todas as coleções
+  // Obter todas as cards
   async findAll() {
     const cards = await prisma.card.findMany({
       orderBy: {
         createdAt: "desc",
       },
       include: {
-        collection: true,
+        collection: {
+          select: {
+            name: true,
+            description: true,
+            releaseYear: true,
+          },  
+        }
       },
     });
 
